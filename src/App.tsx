@@ -1,32 +1,35 @@
-import { EmptyState } from "./components/empty-state";
+import type React from "react";
+
+import { Button } from "./components/ui/button";
+import { UserCircle, PanelLeftClose, PanelLeft } from "lucide-react";
+import { SidebarProvider, useSidebar } from "./contexts/sidebar-context";
 import { Sidebar } from "./components/sidebar";
 import { StatsCards } from "./components/stats-cards";
-import { Button } from "./components/ui/button";
-import { UserCircle } from "lucide-react";
+import { Analytics } from "./components/analytics";
 
-function App() {
+function Layout({ children }: { children: React.ReactNode }) {
+  const { isExpanded, toggleSidebar } = useSidebar();
+
   return (
-    <div className="flex h-screen dark">
+    <div className="flex h-screen max-h-screen">
       <Sidebar />
 
       <div className="flex-1 flex flex-col">
         <header className="flex items-center justify-between p-4 border-b">
-          <Button variant="ghost" size="icon">
-            <span className="sr-only">Back</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="h-4 w-4"
-            >
-              <path d="m15 18-6-6 6-6" />
-            </svg>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggleSidebar}
+            className="hover:bg-secondary"
+          >
+            {isExpanded ? (
+              <PanelLeftClose className="h-5 w-5" />
+            ) : (
+              <PanelLeft className="h-5 w-5" />
+            )}
+            <span className="sr-only">
+              {isExpanded ? "Collapse Sidebar" : "Expand Sidebar"}
+            </span>
           </Button>
 
           <div className="flex items-center gap-4">
@@ -40,11 +43,21 @@ function App() {
         </header>
 
         <main className="flex-1 p-6 space-y-6 overflow-y-auto bg-background">
-          <StatsCards />
-          <EmptyState />
+          {children}
         </main>
       </div>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <SidebarProvider>
+      <Layout>
+        <StatsCards />
+        <Analytics />
+      </Layout>
+    </SidebarProvider>
   );
 }
 
