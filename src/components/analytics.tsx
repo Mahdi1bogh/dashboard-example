@@ -173,7 +173,7 @@ export function Analytics() {
                 >
                   {portfolioData.map((entry, index) => (
                     <Cell
-                      key={`cell-${index}`}
+                      key={`cell-${index + entry.name}`}
                       fill={COLORS[index % COLORS.length]}
                     />
                   ))}
