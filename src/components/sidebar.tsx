@@ -17,7 +17,7 @@ const menuItems = [
   { icon: Users2, label: "Espace Partenaire" },
   { icon: Download, label: "Télécharger" },
   { icon: GraduationCap, label: "Certificat" },
-  { icon: Calendar, label: "Calendrier Économique" },
+  { icon: Calendar, label: "Calendrier Économique", route: "calendar" },
   { icon: Discord, label: "Discord" },
 ];
 
@@ -67,7 +67,7 @@ export function Sidebar() {
           {menuItems.map((item) => (
             <a
               key={item.label}
-              href="#"
+              href={item.route ? `/${item.route}` : "#"}
               className={cn(
                 "flex items-center gap-3 p-2 rounded-md hover:bg-secondary",
                 item.isActive ? "text-white" : "text-muted-foreground",

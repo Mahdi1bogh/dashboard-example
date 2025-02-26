@@ -2,12 +2,12 @@ import type React from "react";
 
 import { Button } from "./components/ui/button";
 import { UserCircle, PanelLeftClose, PanelLeft } from "lucide-react";
-import { SidebarProvider, useSidebar } from "./contexts/sidebar-context";
+import { useSidebar } from "./contexts/sidebar-context";
 import { Sidebar } from "./components/sidebar";
 import { StatsCards } from "./components/stats-cards";
 import { Analytics } from "./components/analytics";
 
-function Layout({ children }: { children: React.ReactNode }) {
+export function Layout({ children }: { children: React.ReactNode }) {
   const { isExpanded, toggleSidebar } = useSidebar();
 
   return (
@@ -52,12 +52,10 @@ function Layout({ children }: { children: React.ReactNode }) {
 
 function App() {
   return (
-    <SidebarProvider>
-      <Layout>
-        <StatsCards />
-        <Analytics />
-      </Layout>
-    </SidebarProvider>
+    <>
+      <StatsCards />
+      <Analytics />
+    </>
   );
 }
 
